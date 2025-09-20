@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Plant Disease Detector 🌿</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-seedling"></i> Smart Plant Disease Detector</h1>
+            <p>Upload a leaf image to detect disease and get remedies instantly.</p>
+        </header>
+
+        <div class="card upload-card">
+            <h2><i class="fas fa-upload"></i> Upload Leaf Image</h2>
+            <form action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" id="fileInput" accept="image/*" required>
+                <button type="submit" class="btn"><i class="fas fa-microscope"></i> Predict Disease</button>
+            </form>
+            <div class="preview">
+                <img id="imgPreview" src="#" alt="Preview Image" style="display:none;">
+            </div>
+        </div>
+
+        <div class="card info-panel">
+            <h2><i class="fas fa-info-circle"></i> How to Use</h2>
+            <ul>
+                <li>Upload a clear image of a single plant leaf.</li>
+                <li>Click <b>Predict Disease</b>.</li>
+                <li>View the result with remedies and tips.</li>
+            </ul>
+        </div>
+
+        <div class="card tips-section">
+            <h2><i class="fas fa-lightbulb"></i> Quick Tips</h2>
+            <div class="tip-card"><i class="fas fa-leaf"></i> Always check leaves for early signs of disease.</div>
+            <div class="tip-card"><i class="fas fa-tint"></i> Maintain proper watering schedule to avoid fungal growth.</div>
+            <div class="tip-card"><i class="fas fa-sun"></i> Ensure proper sunlight exposure for plants.</div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const imgPreview = document.getElementById('imgPreview');
+
+        fileInput.addEventListener('change', function(){
+            const file = this.files[0];
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    imgPreview.setAttribute('src', e.target.result);
+                    imgPreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
